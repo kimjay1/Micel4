@@ -11,7 +11,22 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+// route to show the login form
+Route::get('login', array('uses' => 'HomeController@showLogin'));
+
+// route to process the form
+Route::post('login', array('uses' => 'HomeController@doLogin'));
+
+Route::group(["before" => "auth"], function() {
+    Route::any("/", [
+        "as" => "profile",
+        "uses" => "HomeController@getProfile"
+    ]);
+    Route::any("/logout", [
+        "as" => "logout",
+        "uses" => "HomeController@getLogout"
+    ]);
+
 });
+
+Route::resource('users', 'UserController');

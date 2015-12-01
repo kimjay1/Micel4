@@ -14,13 +14,12 @@ class CreateUserRoleTable extends Migration {
 	{
 		Schema::create('user_role', function(Blueprint $table)
 		{
-			$table->increments('user_role_id');
-
+			$table->increments('id');
+					
 			$table->integer('user_id');
 			$table->foreign('user_id')->references('id')->on('users');
-
-
-			$table->string('user_name');
+				
+			$table->enum('training_role', array('trainor','participant'));
 			$table->timestamps();
 			$table->softDeletes();
 		});
